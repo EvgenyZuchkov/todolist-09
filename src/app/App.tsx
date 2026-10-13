@@ -23,8 +23,10 @@ import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {containerSx} from '../TodolistItem.styles.ts'
 import {NavButton} from '../NavButton.ts'
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store.ts";
+import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
+import {useAppSelector} from "../common/hooks/useAppSelector.ts";
+import {selectTodolists} from "../model/todolists-selectors.ts";
+import {selectTasks} from "../model/tasks-selectors.ts";
 
 export type Todolist = {
     id: string
@@ -44,13 +46,14 @@ export type TasksState = Record<string, Task[]>
 
 type ThemeMode = 'dark' | 'light'
 
+
 export const App = () => {
-    const todolists = useSelector((state: RootState): Todolist[] => state.todolists)
-    const tasks = useSelector((state: RootState): TasksState => state.tasks)
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const theme = createTheme({
         palette: {
@@ -74,7 +77,7 @@ export const App = () => {
     }
 
     const deleteTodolist = (todolistId: string) => {
-        const action = deleteTodolistAC(todolistId)
+        const action = deleteTodolistAC({id: todolistId})
         dispatch(action)
     }
 
