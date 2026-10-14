@@ -90,7 +90,7 @@ export const App = () => {
     }
 
     const createTask = (todolistId: string, title: string) => {
-        dispatch(createTaskAC({todolistId, title}))
+        dispatch(createTaskAC(todolistId, title))
     }
 
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
